@@ -13,7 +13,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:5173", // Vite default
+        origin: ["http://localhost:5173", "https://clientflow-pi.vercel.app"],
         methods: ["GET", "POST"]
     }
 });
@@ -86,7 +86,7 @@ app.get('/', (req, res) => {
     res.json({
         message: 'Nexivo AI Lead Generation Backend is running.',
         status: 'online',
-        socket_url: `ws://localhost:${PORT}`,
+        socket_url: `wss://${req.get('host')}`,
         endpoints: {
             search: 'Connect via WebSocket using search_init event'
         }

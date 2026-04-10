@@ -3,7 +3,8 @@ import { io } from 'socket.io-client';
 import './index.css';
 
 // Initialize socket outside component to prevent multiple connections
-const socket = io('https://clientflow-rimt.onrender.com');
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5001';
+const socket = io(BACKEND_URL);
 
 function App() {
   const [query, setQuery] = useState('');
@@ -94,7 +95,7 @@ function App() {
 
   const saveToCloud = async (lead) => {
     try {
-      const response = await fetch('https://clientflow-rimt.onrender.com/api/save-to-sheet', {
+      const response = await fetch(`${BACKEND_URL}/api/save-to-sheet`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ lead })
